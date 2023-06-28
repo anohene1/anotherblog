@@ -6,6 +6,7 @@ import ArticleCard from "@/components/custom/ArticleCard";
 import {
   useGetHomepageCategoryArticlesQuery,
 } from "@/generated/graphql";
+import Link from "next/link";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -26,16 +27,20 @@ export default function Home() {
         embark on unforgettable adventures. Get ready to ignite your imagination
         and embrace a world of endless discovery!
       </p>
-      <div className="mt-8 flex justify-center gap-4">
-        <Button>Read Articles</Button>
-        <Button variant="secondary">Create Article</Button>
+      <div className="mt-8 mb-40 flex justify-center gap-4">
+        <Button asChild>
+            <Link href="/articles">Read Articles</Link>
+        </Button>
+        <Button variant="secondary" asChild>
+            <Link href="/login">Create Article</Link>
+        </Button>
       </div>
       {categories?.categories?.data?.map((category) => {
         if (category?.attributes?.articles?.data.length === 0) return <></>;
 
         return (
           <>
-            <h4 className="mx-4 mt-40 scroll-m-20 text-xl font-semibold tracking-tight capitalize">
+            <h4 className="mx-4 mt-20 scroll-m-20 text-xl font-semibold capitalize tracking-tight">
               Recent {category?.attributes?.name} Articles
             </h4>
             <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

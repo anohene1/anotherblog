@@ -1,0 +1,59 @@
+query GetLoggedInUser($id: ID) {
+    usersPermissionsUser(id: $id) {
+        data {
+            attributes {
+                firstName
+                lastName
+                username
+                email
+                profilePicture {
+                    data {
+                        attributes {
+                            url
+                        }
+                    }
+                }
+                articles {
+                    data {
+                        id
+                        attributes {
+                            title
+                            description
+                            slug
+                            createdAt
+                            updatedAt
+                            cover {
+                                data {
+                                    attributes {
+                                        url
+                                        height
+                                        width
+                                        name
+                                    }
+                                }
+                            }
+                            author {
+                                data {
+                                    id
+                                    attributes {
+                                        firstName
+                                        lastName
+                                        profilePicture {
+                                            data {
+                                                attributes {
+                                                    url
+                                                    height
+                                                    width
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

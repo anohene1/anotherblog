@@ -1225,6 +1225,21 @@ export type GetHomepageCategoryArticlesQueryVariables = Exact<{ [key: string]: n
 
 export type GetHomepageCategoryArticlesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', name?: string | null, articles?: { __typename?: 'ArticleRelationResponseCollection', data: Array<{ __typename?: 'ArticleEntity', id?: string | null, attributes?: { __typename?: 'Article', title?: string | null, description?: string | null, slug?: string | null, createdAt?: any | null, updatedAt?: any | null, cover?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null, name: string } | null } | null } | null, author?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null } | null } | null } | null } | null } | null } | null } | null }> } | null } | null }> } | null };
 
+export type GetLoggedInUserQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetLoggedInUserQuery = { __typename?: 'Query', usersPermissionsUser?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, username: string, email: string, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null, articles?: { __typename?: 'ArticleRelationResponseCollection', data: Array<{ __typename?: 'ArticleEntity', id?: string | null, attributes?: { __typename?: 'Article', title?: string | null, description?: string | null, slug?: string | null, createdAt?: any | null, updatedAt?: any | null, cover?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null, name: string } | null } | null } | null, author?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null } | null } | null } | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
+
+export type LoginMutationVariables = Exact<{
+  password: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', username: string, email?: string | null, id: string } } };
+
 
 export const GetArticleBySlugDocument = gql`
     query GetArticleBySlug($slug: String) {
@@ -1559,3 +1574,131 @@ export function useGetHomepageCategoryArticlesLazyQuery(baseOptions?: Apollo.Laz
 export type GetHomepageCategoryArticlesQueryHookResult = ReturnType<typeof useGetHomepageCategoryArticlesQuery>;
 export type GetHomepageCategoryArticlesLazyQueryHookResult = ReturnType<typeof useGetHomepageCategoryArticlesLazyQuery>;
 export type GetHomepageCategoryArticlesQueryResult = Apollo.QueryResult<GetHomepageCategoryArticlesQuery, GetHomepageCategoryArticlesQueryVariables>;
+export const GetLoggedInUserDocument = gql`
+    query GetLoggedInUser($id: ID) {
+  usersPermissionsUser(id: $id) {
+    data {
+      attributes {
+        firstName
+        lastName
+        username
+        email
+        profilePicture {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        articles {
+          data {
+            id
+            attributes {
+              title
+              description
+              slug
+              createdAt
+              updatedAt
+              cover {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    name
+                  }
+                }
+              }
+              author {
+                data {
+                  id
+                  attributes {
+                    firstName
+                    lastName
+                    profilePicture {
+                      data {
+                        attributes {
+                          url
+                          height
+                          width
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLoggedInUserQuery__
+ *
+ * To run a query within a React component, call `useGetLoggedInUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLoggedInUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLoggedInUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetLoggedInUserQuery(baseOptions?: Apollo.QueryHookOptions<GetLoggedInUserQuery, GetLoggedInUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLoggedInUserQuery, GetLoggedInUserQueryVariables>(GetLoggedInUserDocument, options);
+      }
+export function useGetLoggedInUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLoggedInUserQuery, GetLoggedInUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLoggedInUserQuery, GetLoggedInUserQueryVariables>(GetLoggedInUserDocument, options);
+        }
+export type GetLoggedInUserQueryHookResult = ReturnType<typeof useGetLoggedInUserQuery>;
+export type GetLoggedInUserLazyQueryHookResult = ReturnType<typeof useGetLoggedInUserLazyQuery>;
+export type GetLoggedInUserQueryResult = Apollo.QueryResult<GetLoggedInUserQuery, GetLoggedInUserQueryVariables>;
+export const LoginDocument = gql`
+    mutation Login($password: String!, $identifier: String!) {
+  login(input: {password: $password, identifier: $identifier}) {
+    user {
+      username
+      email
+      id
+    }
+    jwt
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      identifier: // value for 'identifier'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;

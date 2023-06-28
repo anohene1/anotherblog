@@ -24,10 +24,12 @@ function Page({ params }: { params: { slug: string } }) {
         <>
           <Image
             width={
+            // @ts-ignore
               +data?.articles?.data[0].attributes?.cover?.data?.attributes
                 ?.width
             }
             height={
+            // @ts-ignore
               +data?.articles?.data[0].attributes?.cover?.data?.attributes
                 ?.height
             }
@@ -62,6 +64,7 @@ function Page({ params }: { params: { slug: string } }) {
           </div>
           <ReactMarkdown
             className="prose"
+            // @ts-ignore
             children={`${data?.articles?.data[0].attributes?.content}`}
             remarkPlugins={[remarkGfm]}
           />
