@@ -1,20 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import { Sora } from "next/font/google";
-import Image from "next/image"
-import {cn} from "@/lib/utils";
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
 import ArticleCard from "@/components/custom/ArticleCard";
+import {
+  useGetHomepageCategoryArticlesQuery,
+} from "@/generated/graphql";
 
 const sora = Sora({ subsets: ["latin"] });
 
 export default function Home() {
+  const { data: categories, loading } = useGetHomepageCategoryArticlesQuery();
+
+
   return (
     <main className="mx-auto min-h-full max-w-6xl">
       <h1
@@ -32,32 +30,23 @@ export default function Home() {
         <Button>Read Articles</Button>
         <Button variant="secondary">Create Article</Button>
       </div>
-      <h4 className="mx-4 mt-40 scroll-m-20 text-xl font-semibold tracking-tight">
-        Recent Tech Articles
-      </h4>
-      <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-      </div>
+      {categories?.categories?.data?.map((category) => {
+        if (category?.attributes?.articles?.data.length === 0) return <></>;
 
-        <h4 className="mx-4 mt-40 scroll-m-20 text-xl font-semibold tracking-tight">
-            Recent Food Articles
-        </h4>
-        <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <ArticleCard />
-            <ArticleCard />
-            <ArticleCard />
-        </div>
-
-        <h4 className="mx-4 mt-40 scroll-m-20 text-xl font-semibold tracking-tight">
-            Recent Sports Blogs
-        </h4>
-        <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <ArticleCard />
-            <ArticleCard />
-            <ArticleCard />
-        </div>
+        return (
+          <>
+            <h4 className="mx-4 mt-40 scroll-m-20 text-xl font-semibold tracking-tight capitalize">
+              Recent {category?.attributes?.name} Articles
+            </h4>
+            <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {category?.attributes?.articles?.data?.map((article) => (
+                  // @ts-ignore
+                <ArticleCard article={article} />
+              ))}
+            </div>
+          </>
+        );
+      })}
     </main>
   );
 }

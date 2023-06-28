@@ -1,0 +1,57 @@
+query GetArticleBySlug($slug: String) {
+    articles(filters:{slug:{eq:$slug}}) {
+        data {
+            attributes {
+                title
+                description
+                slug
+                createdAt
+                updatedAt
+                content
+                blocks {
+                    __typename
+                    ... on ComponentSharedRichText {
+                        body
+                    }
+                }
+                category {
+                    data {
+                        id
+                        attributes {
+                            name
+                            slug
+                        }
+                    }
+                }
+                cover {
+                    data {
+                        attributes {
+                            url
+                            height
+                            width
+                            name
+                        }
+                    }
+                }
+                author {
+                    data {
+                        id
+                        attributes {
+                            firstName
+                            lastName
+                            profilePicture {
+                                data {
+                                    attributes {
+                                        url
+                                        height
+                                        width
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

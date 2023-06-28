@@ -1,0 +1,50 @@
+query GetHomepageCategoryArticles {
+    categories {
+        data {
+            id
+            attributes {
+                name
+                articles(pagination: {limit: 3}, sort: "updatedAt:asc") {
+                    data {
+                        id
+                        attributes {
+                            title
+                            description
+                            slug
+                            createdAt
+                            updatedAt
+                            cover {
+                                data {
+                                    attributes {
+                                        url
+                                        height
+                                        width
+                                        name
+                                    }
+                                }
+                            }
+                            author {
+                                data {
+                                    id
+                                    attributes {
+                                        firstName
+                                        lastName
+                                        profilePicture {
+                                            data {
+                                                attributes {
+                                                    url
+                                                    height
+                                                    width
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
