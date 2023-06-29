@@ -4,7 +4,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Sora } from "next/font/google";
-import { useLocalStorage } from "@/lib/useLocalStorage";
 import { redirect, useRouter } from "next/navigation";
 import * as z from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -37,13 +36,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  useCreateArticleMutation,
   useDeleteArticleMutation,
   useGetArticleBySlugQuery,
   useGetCategoriesQuery,
   useUpdateArticleMutation,
 } from "@/generated/graphql";
 import { cn } from "@/lib/utils";
+import { useUserContext } from "@/contexts/UserContext";
 
 const sora = Sora({ subsets: ["latin"] });
 const formSchema = z.object({
@@ -69,7 +68,8 @@ function Page({ params }: { params: { slug: string } }) {
   });
 
   const router = useRouter();
-  const [user, setUser] = useLocalStorage("user", {});
+  // @ts-ignore
+  const { user, setUser } = useUserContext();
   if (!user || !user?.id) redirect("/login");
   const editorRef = useRef(null);
   const { data: categoriesData, loading } = useGetCategoriesQuery();

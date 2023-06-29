@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "@/generated/graphql";
 import { useRouter } from "next/navigation";
-import { useLocalStorage } from "@/lib/useLocalStorage";
+import { useUserContext } from "@/contexts/UserContext";
 
 const formSchema = z.object({
   identifier: z.string(),
@@ -25,7 +25,8 @@ const formSchema = z.object({
 
 export default function Page() {
   const router = useRouter();
-  const [user, setUser] = useLocalStorage("user", {});
+  // @ts-ignore
+  const { user, setUser } = useUserContext();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

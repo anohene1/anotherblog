@@ -1,16 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGetLoggedInUserQuery } from "@/generated/graphql";
 import ArticleCard from "@/components/custom/ArticleCard";
 import { Sora } from "next/font/google";
-import { useLocalStorage } from "@/lib/useLocalStorage";
 import { redirect } from "next/navigation";
+import { useUserContext } from "@/contexts/UserContext";
 
 const sora = Sora({ subsets: ["latin"] });
 
 function Page() {
-  const [user, setUser] = useLocalStorage("user", {});
-  if (!user || !user?.id) redirect("/login");
+  // @ts-ignore
+  const { user, setUser } = useUserContext();
+  if (!user?.id) redirect("/login");
   const { data, loading } = useGetLoggedInUserQuery({
     variables: { id: user.id },
   });
