@@ -15,7 +15,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: `https://anotherblog-backend.up.railway.app/`,
+    uri: `https://anotherblog-backend.up.railway.app/graphql`,
   });
 
   return new NextSSRApolloClient({
