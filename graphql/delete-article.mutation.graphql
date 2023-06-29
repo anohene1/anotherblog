@@ -1,0 +1,9 @@
+mutation DeleteArticle($id: ID!) {
+    deleteArticle(id: $id) {
+        data {
+            attributes {
+                title
+            }
+        }
+    }
+}

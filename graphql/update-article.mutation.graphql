@@ -1,0 +1,11 @@
+mutation UpdateArticle($id: ID!, $title: String, $description: String, $category: ID, $content: String) {
+    updateArticle(id: $id, data: {title: $title, description: $description, content: $content, category: $category}) {
+        data {
+            attributes {
+                slug
+                title
+                description
+            }
+        }
+    }
+}

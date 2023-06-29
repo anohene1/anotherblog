@@ -57,7 +57,6 @@ export type Article = {
   cover?: Maybe<UploadFileEntityResponse>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -92,7 +91,6 @@ export type ArticleFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<ArticleFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ArticleFiltersInput>>>;
-  publishedAt?: InputMaybe<DateTimeFilterInput>;
   slug?: InputMaybe<StringFilterInput>;
   title?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
@@ -105,7 +103,6 @@ export type ArticleInput = {
   content?: InputMaybe<Scalars['String']['input']>;
   cover?: InputMaybe<Scalars['ID']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -153,7 +150,6 @@ export type Category = {
 export type CategoryArticlesArgs = {
   filters?: InputMaybe<ArticleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -669,11 +665,6 @@ export type PaginationArg = {
   start?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export enum PublicationState {
-  Live = 'LIVE',
-  Preview = 'PREVIEW'
-}
-
 export type Query = {
   __typename?: 'Query';
   about?: Maybe<AboutEntityResponse>;
@@ -704,7 +695,6 @@ export type QueryArticleArgs = {
 export type QueryArticlesArgs = {
   filters?: InputMaybe<ArticleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1138,7 +1128,6 @@ export type UsersPermissionsUser = {
 export type UsersPermissionsUserArticlesArgs = {
   filters?: InputMaybe<ArticleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1201,12 +1190,30 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type CreateArticleMutationVariables = Exact<{
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
+  author?: InputMaybe<Scalars['ID']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'ArticleEntityResponse', data?: { __typename?: 'ArticleEntity', attributes?: { __typename?: 'Article', slug?: string | null, title?: string | null, description?: string | null } | null } | null } | null };
+
+export type DeleteArticleMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle?: { __typename?: 'ArticleEntityResponse', data?: { __typename?: 'ArticleEntity', attributes?: { __typename?: 'Article', title?: string | null } | null } | null } | null };
+
 export type GetArticleBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', articles?: { __typename?: 'ArticleEntityResponseCollection', data: Array<{ __typename?: 'ArticleEntity', attributes?: { __typename?: 'Article', title?: string | null, description?: string | null, slug?: string | null, createdAt?: any | null, updatedAt?: any | null, content?: string | null, blocks?: Array<{ __typename: 'ComponentSharedMedia' } | { __typename: 'ComponentSharedQuote' } | { __typename: 'ComponentSharedRichText', body?: string | null } | { __typename: 'ComponentSharedSlider' } | { __typename: 'Error' } | null> | null, category?: { __typename?: 'CategoryEntityResponse', data?: { __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null } | null } | null, cover?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null, name: string } | null } | null } | null, author?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null } | null } | null } | null } | null } | null } | null } | null }> } | null };
+export type GetArticleBySlugQuery = { __typename?: 'Query', articles?: { __typename?: 'ArticleEntityResponseCollection', data: Array<{ __typename?: 'ArticleEntity', id?: string | null, attributes?: { __typename?: 'Article', title?: string | null, description?: string | null, slug?: string | null, createdAt?: any | null, updatedAt?: any | null, content?: string | null, blocks?: Array<{ __typename: 'ComponentSharedMedia' } | { __typename: 'ComponentSharedQuote' } | { __typename: 'ComponentSharedRichText', body?: string | null } | { __typename: 'ComponentSharedSlider' } | { __typename: 'Error' } | null> | null, category?: { __typename?: 'CategoryEntityResponse', data?: { __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null } | null } | null, cover?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null, name: string } | null } | null } | null, author?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null } | null } | null } | null } | null } | null } | null } | null }> } | null };
 
 export type GetArticleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -1219,6 +1226,11 @@ export type GetArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetArticlesQuery = { __typename?: 'Query', articles?: { __typename?: 'ArticleEntityResponseCollection', data: Array<{ __typename?: 'ArticleEntity', id?: string | null, attributes?: { __typename?: 'Article', title?: string | null, description?: string | null, slug?: string | null, createdAt?: any | null, updatedAt?: any | null, category?: { __typename?: 'CategoryEntityResponse', data?: { __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null } | null } | null, cover?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null, name: string } | null } | null } | null, author?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', firstName?: string | null, lastName?: string | null, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, height?: number | null, width?: number | null } | null } | null } | null } | null } | null } | null } | null }> } | null };
+
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', name?: string | null } | null }> } | null };
 
 export type GetHomepageCategoryArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1240,11 +1252,105 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', username: string, email?: string | null, id: string } } };
 
+export type UpdateArticleMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+}>;
 
+
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'ArticleEntityResponse', data?: { __typename?: 'ArticleEntity', attributes?: { __typename?: 'Article', slug?: string | null, title?: string | null, description?: string | null } | null } | null } | null };
+
+
+export const CreateArticleDocument = gql`
+    mutation CreateArticle($title: String, $description: String, $category: ID, $author: ID, $content: String) {
+  createArticle(
+    data: {title: $title, description: $description, content: $content, category: $category, author: $author}
+  ) {
+    data {
+      attributes {
+        slug
+        title
+        description
+      }
+    }
+  }
+}
+    `;
+export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutation, CreateArticleMutationVariables>;
+
+/**
+ * __useCreateArticleMutation__
+ *
+ * To run a mutation, you first call `useCreateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      category: // value for 'category'
+ *      author: // value for 'author'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOptions<CreateArticleMutation, CreateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateArticleMutation, CreateArticleMutationVariables>(CreateArticleDocument, options);
+      }
+export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
+export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
+export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
+export const DeleteArticleDocument = gql`
+    mutation DeleteArticle($id: ID!) {
+  deleteArticle(id: $id) {
+    data {
+      attributes {
+        title
+      }
+    }
+  }
+}
+    `;
+export type DeleteArticleMutationFn = Apollo.MutationFunction<DeleteArticleMutation, DeleteArticleMutationVariables>;
+
+/**
+ * __useDeleteArticleMutation__
+ *
+ * To run a mutation, you first call `useDeleteArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteArticleMutation, { data, loading, error }] = useDeleteArticleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteArticleMutation(baseOptions?: Apollo.MutationHookOptions<DeleteArticleMutation, DeleteArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteArticleMutation, DeleteArticleMutationVariables>(DeleteArticleDocument, options);
+      }
+export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticleMutation>;
+export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
+export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
 export const GetArticleBySlugDocument = gql`
     query GetArticleBySlug($slug: String) {
   articles(filters: {slug: {eq: $slug}}) {
     data {
+      id
       attributes {
         title
         description
@@ -1495,6 +1601,45 @@ export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const GetCategoriesDocument = gql`
+    query GetCategories {
+  categories {
+    data {
+      id
+      attributes {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+      }
+export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+        }
+export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
+export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
+export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetHomepageCategoryArticlesDocument = gql`
     query GetHomepageCategoryArticles {
   categories {
@@ -1702,3 +1847,49 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const UpdateArticleDocument = gql`
+    mutation UpdateArticle($id: ID!, $title: String, $description: String, $category: ID, $content: String) {
+  updateArticle(
+    id: $id
+    data: {title: $title, description: $description, content: $content, category: $category}
+  ) {
+    data {
+      attributes {
+        slug
+        title
+        description
+      }
+    }
+  }
+}
+    `;
+export type UpdateArticleMutationFn = Apollo.MutationFunction<UpdateArticleMutation, UpdateArticleMutationVariables>;
+
+/**
+ * __useUpdateArticleMutation__
+ *
+ * To run a mutation, you first call `useUpdateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateArticleMutation, { data, loading, error }] = useUpdateArticleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      category: // value for 'category'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useUpdateArticleMutation(baseOptions?: Apollo.MutationHookOptions<UpdateArticleMutation, UpdateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateArticleMutation, UpdateArticleMutationVariables>(UpdateArticleDocument, options);
+      }
+export type UpdateArticleMutationHookResult = ReturnType<typeof useUpdateArticleMutation>;
+export type UpdateArticleMutationResult = Apollo.MutationResult<UpdateArticleMutation>;
+export type UpdateArticleMutationOptions = Apollo.BaseMutationOptions<UpdateArticleMutation, UpdateArticleMutationVariables>;

@@ -1,26 +1,30 @@
-import React from 'react';
-import {cn} from "@/lib/utils";
+"use client"
+
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
 import {Article, ArticleEntity} from "@/generated/graphql";
 import Link from "next/link";
+import {useLocalStorage} from "@/lib/useLocalStorage";
 
 interface Props {
     article: ArticleEntity
 }
 
 function ArticleCard({article}: Props) {
+    const [user, setUser] = useLocalStorage('user', {})
+
 
     return (
       <Card className={cn("overflow-hidden min-h-[450px] flex flex-col")}>
         <div className="relative aspect-video w-full">
-          <Image
-            alt="an image"
-            fill={true}
-            src={`${article?.attributes?.cover?.data?.attributes?.url}`}
-          />
+            {article.attributes?.cover?.data ? <Image
+                alt="an image"
+                fill={true}
+                src={`${article?.attributes?.cover?.data?.attributes?.url}`}
+            /> : <div className="h-full bg-gray-200"></div>}
         </div>
         <div className="flex flex-1 flex-col justify-between p-4">
           <div className="flex flex-1 flex-col justify-between">
@@ -47,9 +51,14 @@ function ArticleCard({article}: Props) {
               </div>
             </div>
           </div>
-          <Button variant="outline" asChild>
-              <Link href={`/articles/${article?.attributes?.slug}`}>Read More</Link>
-          </Button>
+          <div className="flex gap-2">
+              <Button className="flex-1" variant="outline" asChild>
+                  <Link href={`/articles/${article?.attributes?.slug}`}>Read More</Link>
+              </Button>
+              {user?.id === article?.attributes?.author?.data?.id && <Button className="flex-1" variant="ghost" asChild >
+                  <Link href={`/my-articles/edit/${article?.attributes?.slug}`}>Edit</Link>
+              </Button>}
+          </div>
         </div>
       </Card>
     );

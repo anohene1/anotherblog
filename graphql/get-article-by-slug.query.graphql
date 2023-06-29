@@ -1,6 +1,7 @@
 query GetArticleBySlug($slug: String) {
     articles(filters:{slug:{eq:$slug}}) {
         data {
+            id
             attributes {
                 title
                 description

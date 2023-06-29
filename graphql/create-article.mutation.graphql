@@ -1,0 +1,11 @@
+mutation CreateArticle($title: String, $description: String, $category: ID, $author: ID, $content: String) {
+    createArticle(data: {title: $title, description: $description, content: $content, category: $category, author: $author}) {
+        data {
+            attributes {
+                slug
+                title
+                description
+            }
+        }
+    }
+}

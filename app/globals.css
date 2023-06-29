@@ -76,3 +76,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.tox .tox-notification--warn, .tox .tox-notification--warning {
+  display: none !important;
+}
+
+.custom-mt-10 {
+  margin-top: 3rem !important;
+}

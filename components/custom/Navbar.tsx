@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { Sora } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,7 @@ function Navbar() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/articles/hello-world" legacyBehavior passHref>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Home
                 </NavigationMenuLink>
