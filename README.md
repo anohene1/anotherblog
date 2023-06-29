@@ -2,19 +2,10 @@
 
 ## Getting Started
 
-- Install dependencies
+- Install Dependencies
 ```
 npm i
 ```
-## Configuring Server
-
-* Clone [server](http://localhost:3000)
-
-* Run server
-```
-npm run develop
-```
-
 
 * Run App
 ```bash

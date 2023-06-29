@@ -38,9 +38,14 @@ function Navbar() {
                   Home
                 </NavigationMenuLink>
               </Link>
-              <Link href="/articles" legacyBehavior passHref>
+              {/*<Link href="/articles" legacyBehavior passHref>*/}
+              {/*  <NavigationMenuLink className={navigationMenuTriggerStyle()}>*/}
+              {/*    Articles*/}
+              {/*  </NavigationMenuLink>*/}
+              {/*</Link>*/}
+              <Link href="/my-articles" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Articles
+                  My Articles
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
