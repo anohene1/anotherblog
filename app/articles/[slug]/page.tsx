@@ -17,6 +17,7 @@ function Page({ params }: { params: { slug: string } }) {
     variables: { slug: params.slug },
   });
 
+ 
   return (
     <div className="mx-auto mt-20 min-h-full max-w-prose px-4">
       {loading ? (
@@ -72,13 +73,16 @@ function Page({ params }: { params: { slug: string } }) {
               </p>
             </div>
           </div>
-          <ReactMarkdown
-            className="prose"
+          {
             // @ts-ignore
-            children={`${data?.articles?.data[0].attributes?.content}`}
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-          />
+            <ReactMarkdown
+              className="prose"
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {data?.articles?.data[0].attributes?.content}
+            </ReactMarkdown>
+          }
         </>
       )}
     </div>

@@ -178,7 +178,7 @@ function Page({ params }: { params: { slug: string } }) {
                   </FormControl>
                   <SelectContent>
                     {categoriesData?.categories?.data.map((category) => (
-                      <SelectItem value={`${category.id}`}>
+                      <SelectItem key={category.id} value={`${category.id}`}>
                         {category.attributes?.name}
                       </SelectItem>
                     ))}

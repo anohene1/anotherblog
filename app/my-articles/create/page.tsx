@@ -134,7 +134,7 @@ function Page() {
                   <SelectContent>
                     {categoriesData?.categories?.data.map((category) => (
                       // @ts-ignore
-                      <SelectItem value={category.id}>
+                      <SelectItem key={category.id} value={category.id}>
                         {category.attributes?.name}
                       </SelectItem>
                     ))}

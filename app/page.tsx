@@ -46,7 +46,7 @@ export default function Home() {
             <div className="mx-4 mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category?.attributes?.articles?.data?.map((article) => (
                   // @ts-ignore
-                <ArticleCard article={article} />
+                <ArticleCard key={article.id} article={article} />
               ))}
             </div>
           </>

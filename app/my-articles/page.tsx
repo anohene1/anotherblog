@@ -26,7 +26,7 @@ function Page() {
         {data?.usersPermissionsUser?.data?.attributes?.articles?.data.map(
           (article) => (
             // @ts-ignore
-            <ArticleCard article={article} />
+            <ArticleCard key={article.id} article={article} />
           )
         )}
       </div>
