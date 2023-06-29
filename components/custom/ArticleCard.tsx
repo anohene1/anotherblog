@@ -7,15 +7,15 @@ import {Button} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
 import {Article, ArticleEntity} from "@/generated/graphql";
 import Link from "next/link";
-import {useLocalStorage} from "@/lib/useLocalStorage";
+import {useUserContext} from "@/contexts/UserContext";
 
 interface Props {
     article: ArticleEntity
 }
 
 function ArticleCard({article}: Props) {
-    const [user, setUser] = useLocalStorage('user', {})
-
+    // @ts-ignore
+    const { user, setUser } = useUserContext();
 
     return (
       <Card className={cn("overflow-hidden min-h-[450px] flex flex-col")}>
