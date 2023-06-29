@@ -125,7 +125,7 @@ function Page({ params }: { params: { slug: string } }) {
       <h2
         className={`${sora.className} scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors my-8`}
       >
-        Create Article
+        Edit Article
       </h2>
       <Form {...form}>
         <form

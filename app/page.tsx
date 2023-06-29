@@ -32,7 +32,7 @@ export default function Home() {
             <Link href="/articles">Read Articles</Link>
         </Button>
         <Button variant="secondary" asChild>
-            <Link href="/login">Create Article</Link>
+            <Link href="/my-articles/create">Create Article</Link>
         </Button>
       </div>
       {categories?.categories?.data?.map((category) => {
